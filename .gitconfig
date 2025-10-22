@@ -1,0 +1,21 @@
+[core]
+	whitespace = cr-at-eol
+	editor = nano -l -w
+[user]
+	name = Sai Manoj Kumar Yadlapati
+	email = sayadlapati@linkedin.com
+[pull]
+	# default pull strategy is to use rebase, don't create merge commits
+	rebase = true
+[push]
+	default = current
+[alias]
+	br = branch -av
+	ci = commit
+	co = checkout
+	fpo = fetch --prune origin
+	last = log -1 HEAD
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --simplify-by-decoration
+	rpo = remote prune origin
+	st = status
+	unstage = reset HEAD --

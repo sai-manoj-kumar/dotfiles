@@ -49,18 +49,6 @@ alias g="git"
 alias gs="git status"
 alias gup="git fetch --prune origin; git prune; git pull; git clean -fdx"
 
-# ------------------------------------------------------------------------------
-# Install utilities
-# ------------------------------------------------------------------------------
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  TOOLS_TO_INSTALL=("jq" "nano" "tree")
-  for tool in ${TOOLS_TO_INSTALL[@]}; do 
-    which $tool >/dev/null || sudo yum install -y $tool
-  done
-  # For rg, the package has a different name
-  which rg >/dev/null || sudo yum install -y ripgrep
-fi
-
 # Set nano as default editor for git and other tools
 export EDITOR="nano"
 export VISUAL="nano"
@@ -68,8 +56,10 @@ export VISUAL="nano"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-# autojump config
-[[ -s /home/coder/.autojump/etc/profile.d/autojump.sh ]] && source /home/coder/.autojump/etc/profile.d/autojump.sh
+# autojump config (installed via source to "$HOME/.autojump")
+if [[ -s "$HOME/.autojump/etc/profile.d/autojump.sh" ]]; then
+  source "$HOME/.autojump/etc/profile.d/autojump.sh"
+fi
 autoload -U compinit && compinit -u
 
 bindkey '^I^I' autosuggest-accept

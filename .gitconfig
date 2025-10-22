@@ -3,7 +3,7 @@
 	editor = nano -l -w
 [user]
 	name = Sai Manoj Kumar Yadlapati
-	email = sayadlapati@linkedin.com
+	email = ysaimanojkumar@gmail.com
 [pull]
 	# default pull strategy is to use rebase, don't create merge commits
 	rebase = true

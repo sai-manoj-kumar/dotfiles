@@ -10,3 +10,8 @@ if [[ ! $(jobs -l) ]]; then
     # exec /usr/bin/zsh -l
   fi
 fi
+
+# Initialize Starship prompt for Bash if available
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init bash)"
+fi

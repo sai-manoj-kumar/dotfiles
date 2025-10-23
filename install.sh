@@ -27,6 +27,7 @@ install_autojump() {
 # Ensure autojump is installed first so both Bash and Zsh have it available
 install_autojump
 
+
 # Run Bash setup
 echo "Setting up Bash..."
 ./setup_bash.sh

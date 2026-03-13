@@ -46,6 +46,44 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   done
 fi
 
+# ------------------------------------------------------------------------------
+# Claude Code — global settings, hooks, MCP servers, plugins
+# ------------------------------------------------------------------------------
+setup_claude_code() {
+    echo ""
+    echo "Setting up Claude Code config..."
+
+    CLAUDE_DIR="$HOME/.claude"
+    mkdir -p "$CLAUDE_DIR"
+
+    # Symlink CLAUDE.md (user preferences)
+    ln -sfv "$PWD/.claude/CLAUDE.md" "$CLAUDE_DIR/CLAUDE.md"
+
+    # Copy hook scripts (need to be executable)
+    cp -v "$PWD/.claude/pre-commit-gate.sh" "$CLAUDE_DIR/pre-commit-gate.sh"
+    chmod +x "$CLAUDE_DIR/pre-commit-gate.sh"
+
+    cp -v "$PWD/.claude/statusline-command.sh" "$CLAUDE_DIR/statusline-command.sh"
+    chmod +x "$CLAUDE_DIR/statusline-command.sh"
+
+    # Generate settings.json from template — replace __HOME__ with actual $HOME
+    if [[ -f "$PWD/.claude/settings.json.tpl" ]]; then
+        sed "s|__HOME__|$HOME|g" "$PWD/.claude/settings.json.tpl" > "$CLAUDE_DIR/settings.json"
+        echo "Generated $CLAUDE_DIR/settings.json"
+    fi
+
+    # Copy settings.local.json (generic permissions)
+    if [[ ! -f "$CLAUDE_DIR/settings.local.json" ]]; then
+        cp -v "$PWD/.claude/settings.local.json" "$CLAUDE_DIR/settings.local.json"
+    else
+        echo "settings.local.json already exists, skipping"
+    fi
+
+    echo "Claude Code config complete."
+}
+
+setup_claude_code
+
 echo "-----------------------------------------"
 echo " Dotfiles installation complete!"
 echo "-----------------------------------------"

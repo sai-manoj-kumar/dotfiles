@@ -21,7 +21,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "dippy"
+            "command": "command -v dippy >/dev/null 2>&1 && dippy || true"
           }
         ]
       }

@@ -40,18 +40,26 @@ echo "Setting up Zsh..."
 # Install utilities
 # ------------------------------------------------------------------------------
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  TOOLS_TO_INSTALL=("jq" "nano" "tree")
+  TOOLS_TO_INSTALL=("jq" "nano" "tree" "ripgrep")
   for tool in ${TOOLS_TO_INSTALL[@]}; do 
     which $tool >/dev/null || sudo apt install -y $tool
   done
 fi
 
 # ------------------------------------------------------------------------------
-# Claude Code — global settings, hooks, MCP servers, plugins
+# Claude Code — install CLI + global settings, hooks, MCP servers, plugins
 # ------------------------------------------------------------------------------
 setup_claude_code() {
     echo ""
-    echo "Setting up Claude Code config..."
+    echo "Setting up Claude Code..."
+
+    # Install Claude Code CLI if not present
+    if ! command -v claude &>/dev/null; then
+        echo "Installing Claude Code..."
+        npm install -g @anthropic-ai/claude-code
+    else
+        echo "Claude Code already installed: $(claude --version 2>/dev/null || echo 'unknown')"
+    fi
 
     CLAUDE_DIR="$HOME/.claude"
     mkdir -p "$CLAUDE_DIR"

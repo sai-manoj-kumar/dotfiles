@@ -47,6 +47,31 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 fi
 
 # ------------------------------------------------------------------------------
+# Dippy — auto-approve safe shell commands for AI coding assistants
+# ------------------------------------------------------------------------------
+install_dippy() {
+    echo ""
+    echo "Installing dippy..."
+
+    if command -v dippy &>/dev/null; then
+        echo "dippy is already installed."
+        return
+    fi
+
+    if command -v brew &>/dev/null; then
+        # macOS: use Homebrew tap
+        brew install ldayton/dippy/dippy
+    elif command -v pip3 &>/dev/null; then
+        # Linux/Codespaces: install from GitHub via pip
+        pip3 install --user git+https://github.com/ldayton/Dippy.git
+    else
+        echo "Warning: Cannot install dippy (no brew or pip3 found). Skipping."
+    fi
+}
+
+install_dippy
+
+# ------------------------------------------------------------------------------
 # Claude Code — install CLI + global settings, hooks, MCP servers, plugins
 # ------------------------------------------------------------------------------
 setup_claude_code() {

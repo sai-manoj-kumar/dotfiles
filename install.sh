@@ -59,7 +59,7 @@ echo "Setting up Zsh..."
 # Install utilities
 # ------------------------------------------------------------------------------
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  TOOLS_TO_INSTALL=("jq" "nano" "tree" "ripgrep")
+  TOOLS_TO_INSTALL=("jq" "nano" "tree" "ripgrep" "tmux")
   for tool in ${TOOLS_TO_INSTALL[@]}; do 
     which $tool >/dev/null || sudo apt install -y $tool
   done

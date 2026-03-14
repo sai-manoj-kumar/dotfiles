@@ -9,6 +9,25 @@ echo "-----------------------------------------"
 # Setup git configuration
 ln -sfv "$PWD/.gitconfig" "$HOME/.gitconfig"
 
+# ------------------------------------------------------------------------------
+# Homebrew — install if not present (works on macOS and Linux)
+# ------------------------------------------------------------------------------
+if ! command -v brew &>/dev/null; then
+    echo "Installing Homebrew..."
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    # Add brew to PATH for the rest of this script
+    if [[ -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    elif [[ -f /opt/homebrew/bin/brew ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    elif [[ -f /usr/local/bin/brew ]]; then
+        eval "$(/usr/local/bin/brew shellenv)"
+    fi
+else
+    echo "Homebrew already installed."
+fi
+
 ## Install autojump before configuring shells (source-only approach)
 install_autojump() {
 	echo "Installing autojump..."
@@ -59,10 +78,8 @@ install_dippy() {
     fi
 
     if command -v brew &>/dev/null; then
-        # macOS: use Homebrew tap
         brew install ldayton/dippy/dippy
     elif command -v pip3 &>/dev/null; then
-        # Linux/Codespaces: install from GitHub via pip
         pip3 install --user git+https://github.com/ldayton/Dippy.git
     else
         echo "Warning: Cannot install dippy (no brew or pip3 found). Skipping."
